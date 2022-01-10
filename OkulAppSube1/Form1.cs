@@ -28,37 +28,24 @@ namespace OkulAppSube1
             OgrenciBL obl = new OgrenciBL();
             try
             {
-                Ogrenci ogrenci = new Ogrenci();
-                ogrenci.Ad = txtAd.Text;
-                ogrenci.Soyad = txtSoyad.Text;
-                ogrenci.Numara = txtNumara.Text;
-                ogrenci.Sinifid = (int)cmbSiniflar.SelectedValue;
-
-                if (obl.Kaydet(ogrenci))
-                {
-                    MessageBox.Show("Başarılı");
-                }
-                else
-                {
-                    MessageBox.Show("Başarısız");
-                }
+                MessageBox.Show(obl.Kaydet(new Ogrenci { Ad = txtAd.Text.Trim(), Soyad = txtSoyad.Text.Trim(), Numara = txtNumara.Text.Trim(), Sinifid = Convert.ToInt32(cmbSiniflar.SelectedValue) }) ? "Ekleme Başarılı" : "Ekleme Başarısız!");
             }
             catch (SqlException)
             {
                 MessageBox.Show("Veritabanı Hatası");
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Bilinmeyen Hata!");
             }
         }
 
 
-        
+
 
         private void btnBul_Click(object sender, EventArgs e)
         {

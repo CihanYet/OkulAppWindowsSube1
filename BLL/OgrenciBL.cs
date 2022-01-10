@@ -18,7 +18,7 @@ namespace BLL
         {
             if (ogr == null)
             {
-                throw new NullReferenceException("Ogrenci nesnesi null geldi");
+                throw new NullReferenceException("Ogrenci eklerken referans null geldi");
             }
 
             try
@@ -36,12 +36,35 @@ namespace BLL
 
         bool Guncelle(Ogrenci ogr)
         {
-            return true;
+            if (ogr == null)
+            {
+                throw new NullReferenceException("Ogrenci güncellerken referans null geldi");
+            }
+
+            try
+            {
+                Helper hlp = new Helper();
+                int sonuc = hlp.ExecuteNonQuery($"Update tblOgrenciler set Ad='{ogr.Ad}',Soyad='{ogr.Soyad}',Numara='{ogr.Numara}',Sinifid={ogr.Sinifid} where Ogrenciid={ogr.Ogrenciid}");
+                return sonuc > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         bool OgrenciSil(int ogrenciid)
-        {
-            return true;
+        {       
+            try
+            {
+                Helper hlp = new Helper();
+                int sonuc = hlp.ExecuteNonQuery($"Delete from tblOgrenciler where Ogrenciid={ogrenciid}");
+                return sonuc > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         Ogrenci OgrenciGetir(int ogrenciid)
