@@ -34,7 +34,7 @@ namespace BLL
 
         }
 
-        bool Guncelle(Ogrenci ogr)
+        public bool Guncelle(Ogrenci ogr)
         {
             if (ogr == null)
             {
@@ -53,8 +53,8 @@ namespace BLL
             }
         }
 
-        bool OgrenciSil(int ogrenciid)
-        {       
+        public bool OgrenciSil(int ogrenciid)
+        {
             try
             {
                 Helper hlp = new Helper();
@@ -67,12 +67,25 @@ namespace BLL
             }
         }
 
-        Ogrenci OgrenciGetir(int ogrenciid)
+        public Ogrenci OgrenciGetir(string numara)
         {
-            return null;
+            Ogrenci ogr = null;
+            Helper hlp = new Helper();
+            SqlDataReader dr = hlp.ExecuteReader($"Select * from tblOgrenciler where Numara='{numara}'");
+            if (dr.Read())
+            {
+                ogr = new Ogrenci();
+                ogr.Ad = dr["Ad"].ToString();
+                ogr.Soyad = dr["Soyad"].ToString();
+                ogr.Numara = dr["Numara"].ToString();
+                ogr.Ogrenciid = Convert.ToInt32(dr["Ogrenciid"]);
+                ogr.Sinifid = Convert.ToInt32(dr["Sinifid"]);
+            }
+            dr.Close();
+            return ogr;
         }
 
-        List<Ogrenci> OgrenciListesi()
+        public List<Ogrenci> OgrenciListesi()
         {
             return null;
         }

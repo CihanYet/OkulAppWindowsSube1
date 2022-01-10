@@ -44,42 +44,20 @@ namespace OkulAppSube1
             }
         }
 
-
-
-
         private void btnBul_Click(object sender, EventArgs e)
         {
-            SqlConnection cn = null;
-            try
+            OgrenciBL obl = new OgrenciBL();
+            Ogrenci ogr = obl.OgrenciGetir(txtBul.Text.Trim());
+            if (ogr!=null) 
             {
-                cn = new SqlConnection(cstr);
-                cn.Open();
-                SqlCommand cmd = new SqlCommand($"Select * from tblOgrenciler where Numara={txtBul.Text.Trim()}", cn);
-
-                SqlDataReader dr = cmd.ExecuteReader();
-                if (dr.Read())
-                {
-                    txtAd.Text = dr["Ad"].ToString();
-                    txtSoyad.Text = dr["Soyad"].ToString();
-                    txtNumara.Text = dr["Numara"].ToString();
-                    // txtSinifId.Text = dr["SinifId"].ToString();
-                }
-                else
-                {
-                    MessageBox.Show("Öğrenci Bulunamadı");
-                }
-                dr.Close();
+                txtAd.Text = ogr.Ad;
+                txtSoyad.Text = ogr.Soyad;
+                txtNumara.Text = ogr.Numara;
+                cmbSiniflar.SelectedValue = ogr.Sinifid;
             }
-            catch (Exception)
+            else
             {
-                throw;
-            }
-            finally
-            {
-                if (cn != null && cn.State != ConnectionState.Closed)//Null Check
-                {
-                    cn.Close();
-                }
+                MessageBox.Show("Öğrenci bulunamadı!");
             }
         }
 
